@@ -92,26 +92,28 @@ BOOST_AUTO_TEST_CASE(test_matching) {
         fill_occurred = true;
     });
     
-    // Add sell order
-    typename hft::OrderBook<double, int64_t, uint64_t>::Order sell_order{
+    // First add a buy order
+    typename hft::OrderBook<double, int64_t, uint64_t>::Order buy_order{
         .id = 1,
         .price = 100.0,
         .quantity = 100,
-        .is_buy = false,
+        .is_buy = true,
         .timestamp = std::chrono::nanoseconds(0)
     };
     
-    // Add matching buy order
-    typename hft::OrderBook<double, int64_t, uint64_t>::Order buy_order{
+    // Then add matching sell order
+    typename hft::OrderBook<double, int64_t, uint64_t>::Order sell_order{
         .id = 2,
         .price = 100.0,
         .quantity = 100,
-        .is_buy = true,
+        .is_buy = false,
         .timestamp = std::chrono::nanoseconds(1)
     };
     
-    engine.handle_order(sell_order);
+    // Add buy order first to establish the bid
     engine.handle_order(buy_order);
+    // Then add sell order which should trigger a match
+    engine.handle_order(sell_order);
     
     BOOST_CHECK(fill_occurred);
 }

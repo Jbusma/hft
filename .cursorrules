@@ -1,0 +1,75 @@
+# HFT Project Development Rules
+
+## Build & Test Workflow
+
+1. Always rebuild after changes:
+```bash
+# Clean and rebuild
+rm -rf build
+mkdir build && cd build
+cmake ..
+make
+
+# Run tests (two options)
+ctest --output-on-failure  # Preferred for detailed output
+# OR
+./tests/hft-tests         # Direct test execution
+```
+
+## Code Organization
+
+1. Template implementations go in header files (.hpp), not source files (.cpp)
+2. Source files (.cpp) for templates should only include their headers
+3. Use include guards (#pragma once) in all headers
+
+## Testing Guidelines
+
+1. Build tests before running:
+```bash
+cd build
+make hft-tests
+```
+
+2. Run specific test suites:
+```bash
+./tests/hft-tests --run_test=OrderBookTests
+./tests/hft-tests --run_test=MatchingEngineTests
+```
+
+3. Get detailed test output:
+```bash
+./tests/hft-tests --log_level=all
+```
+
+## Common Pitfalls
+
+1. Template class implementations must be in headers
+2. Remember to include Utils.hpp when using utils namespace
+3. Be careful with map comparisons and ternary operators
+4. Check build directory location when running executables
+
+## Directory Structure
+
+```
+hft-trading-system/
+├── include/          # All headers (.hpp)
+├── src/             # Source files (.cpp)
+├── tests/           # Test files
+└── build/           # Build artifacts (not in git)
+```
+
+## Build System
+
+1. CMake version 3.15 or higher required
+2. Dependencies:
+   - Boost
+   - TBB
+   - Google Benchmark
+
+## Development Flow
+
+1. Make changes
+2. Clean build
+3. Run tests
+4. Run benchmarks
+5. Commit if all tests pass 

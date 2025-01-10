@@ -1,6 +1,7 @@
 #include <benchmark/benchmark.h>
 #include "OrderBook.hpp"
 #include "MatchingEngine.hpp"
+#include "Utils.hpp"
 
 static void BM_OrderBookAdd(benchmark::State& state) {
     hft::OrderBook<double, int64_t, uint64_t> book;

@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libhft.a CMakeFiles/hft.dir/src/MatchingEngine.cpp.o CMakeFiles/hft.dir/src/OrderBook.cpp.o CMakeFiles/hft.dir/src/MarketDataFeed.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libhft.a

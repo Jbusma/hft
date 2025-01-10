@@ -1,0 +1,22 @@
+Start testing: Jan 09 16:40 PST
+----------------------------------------------------------
+1/1 Testing: hft-tests
+1/1 Test: hft-tests
+Command: "/Users/mac/hft/build/tests/hft-tests"
+Directory: /Users/mac/hft/build/tests
+"hft-tests" start time: Jan 09 16:40 PST
+Output:
+----------------------------------------------------------
+Running 5 test cases...
+
+[1;32;49m*** No errors detected
+[0;39;49m
+<end of output>
+Test time =   0.15 sec
+----------------------------------------------------------
+Test Passed.
+"hft-tests" end time: Jan 09 16:40 PST
+"hft-tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jan 09 16:40 PST

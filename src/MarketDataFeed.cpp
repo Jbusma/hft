@@ -4,37 +4,34 @@
 
 namespace hft {
 
-class MarketDataFeed {
-public:
-    MarketDataFeed() : running_(false) {}
-    
-    void start() {
-        running_ = true;
-        worker_ = std::thread([this]() { run(); });
-    }
-    
-    void stop() {
-        running_ = false;
-        if (worker_.joinable()) {
-            worker_.join();
-        }
-    }
+// Implementation of MarketDataFeed methods
+MarketDataFeed::MarketDataFeed() : running_(false) {}
 
-private:
-    void run() {
-        while (running_) {
-            // Implement market data processing here
-            process_next_message();
-            std::this_thread::yield();
-        }
-    }
-    
-    void process_next_message() {
-        // Implementation for processing market data messages
-    }
+MarketDataFeed::~MarketDataFeed() {
+    stop();
+}
 
-    std::atomic<bool> running_;
-    std::thread worker_;
-};
+void MarketDataFeed::start() {
+    running_ = true;
+    worker_ = std::thread([this]() { run(); });
+}
+
+void MarketDataFeed::stop() {
+    running_ = false;
+    if (worker_.joinable()) {
+        worker_.join();
+    }
+}
+
+void MarketDataFeed::run() {
+    while (running_) {
+        process_next_message();
+        std::this_thread::yield();
+    }
+}
+
+void MarketDataFeed::process_next_message() {
+    // Implementation for processing market data messages
+}
 
 } // namespace hft 

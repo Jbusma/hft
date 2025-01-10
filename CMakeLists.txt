@@ -38,7 +38,7 @@ target_link_libraries(hft
 )
 
 # Add executable
-add_executable(hft-trading main.cpp)
+add_executable(hft-trading src/main.cpp)
 target_link_libraries(hft-trading PRIVATE hft)
 
 # Enable testing
