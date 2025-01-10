@@ -15,7 +15,7 @@ A modern C++20 implementation of a high-frequency trading system featuring a mat
 ### macOS
 ```bash
 # Install dependencies using Homebrew
-brew install cmake boost intel-tbb google-benchmark
+brew install cmake boost tbb google-benchmark
 ```
 
 ### Linux (Ubuntu/Debian)
@@ -23,31 +23,39 @@ brew install cmake boost intel-tbb google-benchmark
 sudo apt-get install build-essential cmake libboost-all-dev libtbb-dev libbenchmark-dev
 ```
 
-## Building
+## Building & Testing
 
+Always clean build after changes:
 ```bash
-# Create build directory
-mkdir -p build && cd build
-
-# Configure with CMake
+# Clean and rebuild
+rm -rf build
+mkdir build && cd build
 cmake ..
+make
 
-# Build (using all cores)
-make -j$(sysctl -n hw.ncpu)  # macOS
-make -j$(nproc)              # Linux
+# Run tests with detailed output
+ctest --output-on-failure
 ```
 
-## Running Tests
-
+Run specific test suites:
 ```bash
-# Run all tests
-./build/hft-tests
+./tests/hft-tests --run_test=OrderBookTests
+./tests/hft-tests --run_test=MatchingEngineTests
+```
 
-# Run with detailed output
-./build/hft-tests --log_level=all
+## Project Structure
 
-# Run specific test suite
-./build/hft-tests --run_test=OrderBookTests
+```
+hft-trading-system/
+├── include/                 # Header files (.hpp)
+│   ├── Concepts.hpp        # Type constraints
+│   ├── MatchingEngine.hpp  # Order matching
+│   ├── OrderBook.hpp       # Order management
+│   ├── MarketDataFeed.hpp  # Market data handling
+│   └── Utils.hpp           # Utilities
+├── src/                    # Source files (.cpp)
+├── tests/                  # Test suite
+└── build/                  # Build artifacts (not in git)
 ```
 
 ## Example Usage
@@ -75,29 +83,6 @@ typename hft::OrderBook<double, int64_t, uint64_t>::Order order{
 };
 
 engine.handle_order(order);
-```
-
-## Project Structure
-
-```
-hft-trading-system/
-├── include/                 # Header files
-│   ├── Concepts.hpp        # Type constraints
-│   ├── MatchingEngine.hpp  # Order matching
-│   ├── OrderBook.hpp       # Order management
-│   ├── MarketDataFeed.hpp  # Market data handling
-│   └── Utils.hpp           # Utilities
-├── src/                    # Implementation files
-├── tests/                  # Test suite
-└── scripts/                # Build & run scripts
-```
-
-## Running Benchmarks
-
-```bash
-# Build and run benchmarks
-cd build
-./hft-benchmark
 ```
 
 ## Contributing
