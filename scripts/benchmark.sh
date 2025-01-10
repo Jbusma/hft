@@ -10,7 +10,7 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j$(sysctl -n hw.ncpu)
 
 # Run benchmarks
-./${BENCHMARK_BINARY}
+./tests/${BENCHMARK_BINARY}
 
 # Generate performance report
 echo "Performance Report" > benchmark_report.txt

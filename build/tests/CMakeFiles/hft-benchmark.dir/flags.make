@@ -6,7 +6,7 @@ CXX_DEFINES = -DBENCHMARK_STATIC_DEFINE
 
 CXX_INCLUDES = -I/usr/local/include -I/Users/mac/hft/include -isystem /opt/homebrew/include
 
-CXX_FLAGSarm64 = -std=c++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.6
+CXX_FLAGSarm64 = -O3 -DNDEBUG -march=native -mtune=native -std=c++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.6
 
-CXX_FLAGS = -std=c++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.6
+CXX_FLAGS = -O3 -DNDEBUG -march=native -mtune=native -std=c++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.6
 

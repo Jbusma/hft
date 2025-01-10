@@ -72,4 +72,47 @@ hft-trading-system/
 2. Clean build
 3. Run tests
 4. Run benchmarks
-5. Commit if all tests pass 
+5. Commit if all tests pass
+
+## Performance Optimization Checklist
+
+### Build Optimizations
+```bash
+# Always build in Release mode with optimizations
+cmake -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_FLAGS="-O3 -march=native -mtune=native" ..
+```
+
+### Code Optimizations
+1. Use constexpr where possible
+2. Minimize virtual functions in hot path
+3. Align data structures to cache lines
+4. Pre-allocate containers
+5. Use move semantics
+
+### Memory Optimizations
+1. Use reserve() for vectors
+2. Pool allocators for frequent allocations
+3. Minimize cache misses
+4. Align data to 64-byte boundaries
+
+### Testing Optimizations
+```bash
+# Run tests with timing info
+./tests/hft-tests --log_level=all
+
+# Run benchmarks
+./tests/hft-benchmark
+```
+
+### System Optimizations
+1. Disable CPU frequency scaling
+2. Set process priority (nice -20)
+3. Use isolated CPU cores when possible
+4. Monitor system latency
+
+### Measurement
+1. Always measure in Release mode
+2. Use multiple iterations
+3. Record both mean and tail latencies
+4. Monitor CPU cache misses 

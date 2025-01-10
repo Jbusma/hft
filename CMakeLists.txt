@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Performance flags
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -march=native -mtune=native")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -flto")
+
 # Add Homebrew paths for macOS
 if(APPLE)
     include_directories(/usr/local/include)
@@ -15,7 +19,8 @@ endif()
 # Find required packages
 find_package(Boost REQUIRED)
 find_package(TBB REQUIRED)
-find_package(benchmark REQUIRED)
+find_package(benchmark REQUIRED CONFIG)
+include_directories(${benchmark_INCLUDE_DIRS})
 
 # Add main library
 add_library(hft

@@ -1,7 +1,26 @@
 #define BOOST_TEST_MODULE HFT Trading System Tests
 #include <boost/test/unit_test.hpp>
+#include <boost/test/tools/output_test_stream.hpp>
+#include <boost/test/execution_monitor.hpp>  // For timing
 #include "OrderBook.hpp"
 #include "MatchingEngine.hpp"
+
+// Add timing fixture
+struct TimingFixture {
+    TimingFixture() {
+        boost::unit_test::unit_test_log.set_threshold_level(boost::unit_test::log_successful_tests);
+        start_time = std::chrono::high_resolution_clock::now();
+    }
+    ~TimingFixture() {
+        auto end_time = std::chrono::high_resolution_clock::now();
+        auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time);
+        auto us = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+        BOOST_TEST_MESSAGE("Test duration: " << us.count() << " us (" << ns.count() << " ns)");
+    }
+    std::chrono::high_resolution_clock::time_point start_time;
+};
+
+BOOST_TEST_GLOBAL_FIXTURE(TimingFixture);
 
 BOOST_AUTO_TEST_SUITE(OrderBookTests)
 

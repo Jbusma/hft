@@ -1,22 +1,44 @@
-Start testing: Jan 09 16:40 PST
+Start testing: Jan 09 17:08 PST
 ----------------------------------------------------------
 1/1 Testing: hft-tests
 1/1 Test: hft-tests
 Command: "/Users/mac/hft/build/tests/hft-tests"
 Directory: /Users/mac/hft/build/tests
-"hft-tests" start time: Jan 09 16:40 PST
+"hft-tests" start time: Jan 09 17:08 PST
 Output:
 ----------------------------------------------------------
 Running 5 test cases...
-
+[1;34;49m/Users/mac/hft/tests/test_main.cpp:25: Entering test suite "OrderBookTests"
+[0;39;49m[1;34;49m/Users/mac/hft/tests/test_main.cpp:27: Entering test case "test_add_order"
+[0;39;49m/Users/mac/hft/tests/test_main.cpp:39: [1;32;49minfo: check book.volume_at_price(100.0) == 100 has passed[0;39;49m
+[1;34;49m/Users/mac/hft/tests/test_main.cpp:27: Leaving test case "test_add_order"; testing time: 33us
+[0;39;49m[1;34;49m/Users/mac/hft/tests/test_main.cpp:42: Entering test case "test_cancel_order"
+[0;39;49m/Users/mac/hft/tests/test_main.cpp:55: [1;32;49minfo: check book.volume_at_price(100.0) == 0 has passed[0;39;49m
+[1;34;49m/Users/mac/hft/tests/test_main.cpp:42: Leaving test case "test_cancel_order"; testing time: 29us
+[0;39;49m[1;34;49m/Users/mac/hft/tests/test_main.cpp:58: Entering test case "test_modify_order"
+[0;39;49m/Users/mac/hft/tests/test_main.cpp:71: [1;32;49minfo: check book.volume_at_price(100.0) == 150 has passed[0;39;49m
+[1;34;49m/Users/mac/hft/tests/test_main.cpp:58: Leaving test case "test_modify_order"; testing time: 25us
+[0;39;49m[1;34;49m/Users/mac/hft/tests/test_main.cpp:74: Entering test case "test_best_prices"
+[0;39;49m/Users/mac/hft/tests/test_main.cpp:98: [1;32;49minfo: check book.best_bid() == 99.0 has passed[0;39;49m
+/Users/mac/hft/tests/test_main.cpp:99: [1;32;49minfo: check book.best_ask() == 101.0 has passed[0;39;49m
+[1;34;49m/Users/mac/hft/tests/test_main.cpp:74: Leaving test case "test_best_prices"; testing time: 28us
+[0;39;49m[1;34;49m/Users/mac/hft/tests/test_main.cpp:25: Leaving test suite "OrderBookTests"; testing time: 144us
+[0;39;49m[1;34;49m/Users/mac/hft/tests/test_main.cpp:104: Entering test suite "MatchingEngineTests"
+[0;39;49m[1;34;49m/Users/mac/hft/tests/test_main.cpp:106: Entering test case "test_matching"
+[0;39;49m/Users/mac/hft/tests/test_main.cpp:137: [1;32;49minfo: check fill_occurred has passed[0;39;49m
+[1;34;49m/Users/mac/hft/tests/test_main.cpp:106: Leaving test case "test_matching"; testing time: 97us
+[0;39;49m[1;34;49m/Users/mac/hft/tests/test_main.cpp:104: Leaving test suite "MatchingEngineTests"; testing time: 104us
+[0;39;49m[1;36;49mTest duration: 295 us (295917 ns)[0;39;49m
+[1;34;49mLeaving test module "HFT Trading System Tests"; testing time: 272us
+[0;39;49m
 [1;32;49m*** No errors detected
 [0;39;49m
 <end of output>
-Test time =   0.15 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"hft-tests" end time: Jan 09 16:40 PST
+"hft-tests" end time: Jan 09 17:08 PST
 "hft-tests" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Jan 09 16:40 PST
+End testing: Jan 09 17:08 PST
