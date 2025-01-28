@@ -14,6 +14,8 @@
 # EXTERNAL cache entries
 ########################
 
+Boost_CONTAINER_LIBRARY_RELEASE:STRING=/opt/homebrew/lib/libboost_container.dylib
+
 //The directory containing a CMake configuration file for Boost.
 Boost_DIR:PATH=/opt/homebrew/lib/cmake/Boost-1.87.0
 
@@ -224,6 +226,9 @@ TBB_DIR:PATH=/opt/homebrew/lib/cmake/TBB
 //The directory containing a CMake configuration file for benchmark.
 benchmark_DIR:PATH=/opt/homebrew/lib/cmake/benchmark
 
+//The directory containing a CMake configuration file for boost_container.
+boost_container_DIR:PATH=/opt/homebrew/lib/cmake/boost_container-1.87.0
+
 //The directory containing a CMake configuration file for boost_headers.
 boost_headers_DIR:PATH=/opt/homebrew/lib/cmake/boost_headers-1.87.0
 
@@ -379,6 +384,8 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/opt/homebrew/lib/cmake/Boost-1.87.0/BoostConfig.cmake][cfound components: unit_test_framework ][v1.87.0()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//ADVANCED property for variable: boost_container_DIR
+boost_container_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: boost_headers_DIR
 boost_headers_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: boost_unit_test_framework_DIR

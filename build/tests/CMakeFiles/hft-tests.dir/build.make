@@ -98,6 +98,7 @@ tests/hft-tests: tests/CMakeFiles/hft-tests.dir/build.make
 tests/hft-tests: libhft.a
 tests/hft-tests: /opt/homebrew/lib/libboost_unit_test_framework.dylib
 tests/hft-tests: /opt/homebrew/lib/libtbb.12.14.dylib
+tests/hft-tests: /opt/homebrew/lib/libboost_container.dylib
 tests/hft-tests: tests/CMakeFiles/hft-tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/mac/hft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable hft-tests"
 	cd /Users/mac/hft/build/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hft-tests.dir/link.txt --verbose=$(VERBOSE)

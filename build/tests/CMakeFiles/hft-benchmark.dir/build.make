@@ -98,6 +98,7 @@ tests/hft-benchmark: tests/CMakeFiles/hft-benchmark.dir/build.make
 tests/hft-benchmark: libhft.a
 tests/hft-benchmark: /opt/homebrew/lib/libbenchmark.a
 tests/hft-benchmark: /opt/homebrew/lib/libtbb.12.14.dylib
+tests/hft-benchmark: /opt/homebrew/lib/libboost_container.dylib
 tests/hft-benchmark: tests/CMakeFiles/hft-benchmark.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/mac/hft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable hft-benchmark"
 	cd /Users/mac/hft/build/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hft-benchmark.dir/link.txt --verbose=$(VERBOSE)

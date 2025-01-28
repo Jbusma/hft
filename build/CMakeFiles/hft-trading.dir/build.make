@@ -97,6 +97,7 @@ hft-trading: CMakeFiles/hft-trading.dir/src/main.cpp.o
 hft-trading: CMakeFiles/hft-trading.dir/build.make
 hft-trading: libhft.a
 hft-trading: /opt/homebrew/lib/libtbb.12.14.dylib
+hft-trading: /opt/homebrew/lib/libboost_container.dylib
 hft-trading: CMakeFiles/hft-trading.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/mac/hft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable hft-trading"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hft-trading.dir/link.txt --verbose=$(VERBOSE)
