@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Performance flags
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -march=native -mtune=native")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -march=native -mtune=native -fsanitize=thread")
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -flto")
 
 # Add Homebrew paths for macOS
@@ -17,7 +17,7 @@ if(APPLE)
 endif()
 
 # Find required packages
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS container)
 find_package(TBB REQUIRED)
 find_package(benchmark REQUIRED CONFIG)
 include_directories(${benchmark_INCLUDE_DIRS})
@@ -40,6 +40,7 @@ target_link_libraries(hft
     PUBLIC
         Boost::boost
         TBB::tbb
+        Boost::container
 )
 
 # Add executable

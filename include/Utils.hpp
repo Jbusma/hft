@@ -17,4 +17,18 @@ inline uint64_t generate_order_id() {
     return ++next_id;
 }
 
+// Add likely/unlikely macros
+#ifdef __GNUC__
+#define likely(x)       __builtin_expect(!!(x), 1)
+#define unlikely(x)     __builtin_expect(!!(x), 0)
+#else
+#define likely(x)       (x)
+#define unlikely(x)     (x)
+#endif
+
+// Prefetch instructions for market data
+inline void prefetch(const void* addr) {
+    __builtin_prefetch(addr);
+}
+
 } // namespace hft::utils 

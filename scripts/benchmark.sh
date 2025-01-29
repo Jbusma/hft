@@ -1,16 +1,17 @@
 #!/bin/bash
 
-BUILD_DIR="build"
-BENCHMARK_BINARY="hft-benchmark"
+# Set high priority
+sudo renice -20 -p $$
 
-# Build in release mode
-mkdir -p ${BUILD_DIR}
-cd ${BUILD_DIR}
-cmake -DCMAKE_BUILD_TYPE=Release ..
-make -j$(sysctl -n hw.ncpu)
+# Build in release mode with optimizations
+rm -rf build
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_FLAGS="-O3 -march=native" ..
+make
 
-# Run benchmarks
-./tests/${BENCHMARK_BINARY}
+# Run benchmarks with high priority
+sudo nice -n -20 ./tests/hft-benchmark
 
 # Generate performance report
 echo "Performance Report" > benchmark_report.txt

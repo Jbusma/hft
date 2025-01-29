@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Concepts.hpp"
-#include <map>
 #include <unordered_map>
 #include <memory>
+#include <boost/container/flat_map.hpp>
+#include <mutex>
 
 namespace hft {
 
@@ -29,13 +30,15 @@ public:
     Q volume_at_price(P price) const;
 
 private:
-    std::map<P, Q, std::greater<P>> bids_;  // Price-time priority
-    std::map<P, Q, std::less<P>> asks_;     // Price-time priority
+    boost::container::flat_map<P, Q, std::greater<P>> bids_;  // Price-time priority
+    boost::container::flat_map<P, Q, std::less<P>> asks_;     // Price-time priority
     std::unordered_map<ID, Order> orders_;  // Quick order lookup
+    mutable std::mutex book_mutex_;
 };
 
 template<Price P, Quantity Q, OrderId ID>
 void OrderBook<P, Q, ID>::add_order(Order order) {
+    std::lock_guard<std::mutex> lock(book_mutex_);
     if (order.is_buy) {
         bids_[order.price] += order.quantity;
     } else {
@@ -46,6 +49,7 @@ void OrderBook<P, Q, ID>::add_order(Order order) {
 
 template<Price P, Quantity Q, OrderId ID>
 void OrderBook<P, Q, ID>::cancel_order(const ID& order_id) {
+    std::lock_guard<std::mutex> lock(book_mutex_);
     auto it = orders_.find(order_id);
     if (it == orders_.end()) {
         throw std::runtime_error("Order not found");
@@ -94,6 +98,7 @@ void OrderBook<P, Q, ID>::modify_order(const ID& order_id, Q new_quantity) {
 
 template<Price P, Quantity Q, OrderId ID>
 P OrderBook<P, Q, ID>::best_bid() const {
+    std::lock_guard<std::mutex> lock(book_mutex_);
     if (bids_.empty()) {
         throw std::runtime_error("No bids available");
     }

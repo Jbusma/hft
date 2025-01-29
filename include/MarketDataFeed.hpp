@@ -5,6 +5,8 @@
 #include <thread>
 #include <functional>
 #include <queue>
+#include <unordered_map>
+#include <memory>
 
 namespace hft {
 
@@ -37,6 +39,20 @@ private:
     std::atomic<bool> running_;
     std::thread worker_;
     std::vector<std::function<void()>> callbacks_;
+};
+
+class MultiVenueDataFeed {
+    struct VenueConfig {
+        std::string venue_id;
+        std::string ip;
+        int port;
+        double latency_ms;  // Measured latency to venue
+    };
+    
+    std::unordered_map<std::string, std::unique_ptr<MarketDataFeed>> venue_feeds;
+    
+    // Each venue gets its own thread and connection
+    void connect_venue(const VenueConfig& config);
 };
 
 } // namespace hft 

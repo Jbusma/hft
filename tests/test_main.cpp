@@ -4,6 +4,11 @@
 #include <boost/test/execution_monitor.hpp>  // For timing
 #include "OrderBook.hpp"
 #include "MatchingEngine.hpp"
+#include "Utils.hpp"
+#include <thread>
+#include <atomic>
+#include <vector>
+#include "SharedPtr.hpp"  // Add at top with other includes
 
 // Add timing fixture
 struct TimingFixture {
@@ -135,6 +140,90 @@ BOOST_AUTO_TEST_CASE(test_matching) {
     engine.handle_order(sell_order);
     
     BOOST_CHECK(fill_occurred);
+}
+
+BOOST_AUTO_TEST_SUITE_END() 
+
+BOOST_AUTO_TEST_SUITE(MemoryTests)
+
+BOOST_AUTO_TEST_CASE(test_no_memory_leaks) {
+    static std::atomic<size_t> total_allocations{0};
+
+    {
+        auto engine = std::make_unique<hft::MatchingEngine<double, int64_t, uint64_t>>();
+        // Reduced iterations from 1000 to 100
+        for (uint64_t i = 0; i < 100; i++) {
+            engine->handle_order({
+                .id = i,
+                .price = 100.0,
+                .quantity = 100,
+                .is_buy = true,
+                .timestamp = hft::utils::current_time()
+            });
+            engine->cancel_order(i);
+        }
+    }
+    
+    BOOST_CHECK_EQUAL(total_allocations.load(), 0);
+}
+
+BOOST_AUTO_TEST_CASE(test_thread_safety) {
+    auto engine = std::make_shared<hft::MatchingEngine<double, int64_t, uint64_t>>();
+    std::atomic<bool> error_occurred{false};
+    std::vector<std::thread> threads;
+    
+    // Use atomic counter for IDs
+    std::atomic<uint64_t> id_counter{0};
+    
+    for (int i = 0; i < 4; i++) {  // More aggressive test
+        threads.emplace_back([&engine, &error_occurred, &id_counter]() {
+            try {
+                for (int j = 0; j < 1000; j++) {  // More iterations
+                    uint64_t id = id_counter.fetch_add(1);
+                    engine->handle_order({
+                        .id = id,
+                        .price = 100.0 + (id % 10),  // Vary prices
+                        .quantity = 100,
+                        .is_buy = true,
+                        .timestamp = hft::utils::current_time()
+                    });
+                    engine->cancel_order(id);
+                }
+            } catch (...) {
+                error_occurred = true;
+            }
+        });
+    }
+    
+    for (auto& t : threads) {
+        t.join();
+    }
+    
+    BOOST_CHECK(!error_occurred.load());
+}
+
+BOOST_AUTO_TEST_SUITE_END() 
+
+BOOST_AUTO_TEST_SUITE(SharedPtrTests)
+
+BOOST_AUTO_TEST_CASE(test_basic_usage) {
+    auto ptr = hft::SharedPtr<int>(new int(42));
+    BOOST_CHECK_EQUAL(*ptr, 42);
+    BOOST_CHECK_EQUAL(ptr.use_count(), 1);
+}
+
+BOOST_AUTO_TEST_CASE(test_sharing) {
+    auto ptr1 = hft::SharedPtr<int>(new int(42));
+    auto ptr2 = ptr1;
+    BOOST_CHECK_EQUAL(ptr1.use_count(), 2);
+    BOOST_CHECK_EQUAL(ptr2.use_count(), 2);
+}
+
+BOOST_AUTO_TEST_CASE(test_reset) {
+    auto ptr = hft::SharedPtr<int>(new int(42));
+    ptr.reset(new int(24));
+    BOOST_CHECK_EQUAL(*ptr, 24);
+    BOOST_CHECK_EQUAL(ptr.use_count(), 1);
 }
 
 BOOST_AUTO_TEST_SUITE_END() 

@@ -1,0 +1,4 @@
+template<typename T>
+SharedPtr<T>::SharedPtr(T* ptr) {
+    // Implementation
+} 

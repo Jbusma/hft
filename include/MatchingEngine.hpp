@@ -3,6 +3,7 @@
 #include "OrderBook.hpp"
 #include <queue>
 #include <functional>
+#include <mutex>
 
 namespace hft {
 
@@ -21,13 +22,13 @@ public:
 private:
     OrderBook<P, Q, ID> order_book_;
     OrderCallback fill_callback_;
+    std::mutex engine_mutex_;
     
     void match_order(const typename OrderBook<P, Q, ID>::Order& order);
 };
 
 template<Price P, Quantity Q, OrderId ID>
 void MatchingEngine<P, Q, ID>::handle_order(typename OrderBook<P, Q, ID>::Order order) {
-    // First add the order to establish price levels
     order_book_.add_order(order);
     
     // Then try to match
@@ -59,6 +60,7 @@ void MatchingEngine<P, Q, ID>::cancel_order(const ID& order_id) {
 
 template<Price P, Quantity Q, OrderId ID>
 void MatchingEngine<P, Q, ID>::match_order(const typename OrderBook<P, Q, ID>::Order& order) {
+    std::lock_guard<std::mutex> lock(engine_mutex_);
     // Placeholder for future matching logic
 }
 
